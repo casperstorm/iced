@@ -8,12 +8,16 @@ use crate::renderer;
 use crate::touch;
 use crate::widget::tree::{self, Tree};
 use crate::{
-    Background, Clipboard, Color, Element, Layout, Length, Point, Rectangle, Shell, Size, Widget,
+    Background, Clipboard, Color, Element, Layout, Length, Point, Rectangle,
+    Shell, Size, Widget,
 };
 
 use std::ops::RangeInclusive;
 
-pub use iced_style::slider::{Appearance, Handle, HandleShape, StyleSheet};
+use iced_core::color;
+pub use iced_style::slider::{
+    Appearance, Handle, HandleShape, Rail, StyleSheet,
+};
 
 /// An horizontal bar and a handle that selects a single value from a range of
 /// values.
@@ -127,7 +131,10 @@ where
     }
 
     /// Sets the style of the [`Slider`].
-    pub fn style(mut self, style: impl Into<<Renderer::Theme as StyleSheet>::Style>) -> Self {
+    pub fn style(
+        mut self,
+        style: impl Into<<Renderer::Theme as StyleSheet>::Style>,
+    ) -> Self {
         self.style = style.into();
         self
     }
@@ -139,7 +146,8 @@ where
     }
 }
 
-impl<'a, T, Message, Renderer> Widget<Message, Renderer> for Slider<'a, T, Message, Renderer>
+impl<'a, T, Message, Renderer> Widget<Message, Renderer>
+    for Slider<'a, T, Message, Renderer>
 where
     T: Copy + Into<f64> + num_traits::FromPrimitive,
     Message: Clone,
@@ -162,8 +170,13 @@ where
         Length::Shrink
     }
 
-    fn layout(&self, _renderer: &Renderer, limits: &layout::Limits) -> layout::Node {
-        let limits = limits.width(self.width).height(Length::Units(self.height));
+    fn layout(
+        &self,
+        _renderer: &Renderer,
+        limits: &layout::Limits,
+    ) -> layout::Node {
+        let limits =
+            limits.width(self.width).height(Length::Units(self.height));
 
         let size = limits.resolve(Size::ZERO);
 
@@ -224,7 +237,11 @@ where
         _viewport: &Rectangle,
         _renderer: &Renderer,
     ) -> mouse::Interaction {
-        mouse_interaction(layout, cursor_position, tree.state.downcast_ref::<State>())
+        mouse_interaction(
+            layout,
+            cursor_position,
+            tree.state.downcast_ref::<State>(),
+        )
     }
 }
 
@@ -236,7 +253,9 @@ where
     Renderer: 'a + crate::Renderer,
     Renderer::Theme: StyleSheet,
 {
-    fn from(slider: Slider<'a, T, Message, Renderer>) -> Element<'a, Message, Renderer> {
+    fn from(
+        slider: Slider<'a, T, Message, Renderer>,
+    ) -> Element<'a, Message, Renderer> {
         Element::new(slider)
     }
 }
@@ -272,7 +291,8 @@ where
             let start = (*range.start()).into();
             let end = (*range.end()).into();
 
-            let percent = f64::from(cursor_position.x - bounds.x) / f64::from(bounds.width);
+            let percent = f64::from(cursor_position.x - bounds.x)
+                / f64::from(bounds.width);
 
             let steps = (percent * (end - start) / step).round();
             let value = steps * step + start;
@@ -355,7 +375,10 @@ pub fn draw<T, R>(
 
     let value = value.into() as f32;
 
-    let (handle_width, handle_height, handle_border_radius) = match style.handle.shape {
+    let (handle_width, handle_height, handle_border_radius) = match style
+        .handle
+        .shape
+    {
         HandleShape::Circle { radius } => (radius * 2.0, radius * 2.0, radius),
         HandleShape::Rectangle {
             width,
@@ -372,44 +395,59 @@ pub fn draw<T, R>(
     let offset = if range_start >= range_end {
         0.0
     } else {
-        bounds.width * (value - range_start) / (range_end - range_start) - handle_width / 2.0
+        bounds.width * (value - range_start) / (range_end - range_start)
+            - handle_width / 2.0
     };
+
+    renderer.fill_quad(
+        renderer::Quad {
+            bounds: bounds,
+            border_radius: 0.0.into(),
+            border_width: 0.0,
+            border_color: Color::TRANSPARENT,
+        },
+        color!(255, 255, 200),
+    );
+
+    let line_y =
+        bounds.y + bounds.height as f32 / 2.0 - style.rail.rail_height / 2.0;
+    let line_offset = offset + handle_width / 2.0;
 
     renderer.fill_quad(
         renderer::Quad {
             bounds: Rectangle {
                 x: bounds.x,
-                y: bounds.y,
-                width: offset,
-                height: 2.0,
+                y: line_y,
+                width: line_offset,
+                height: style.rail.rail_height,
             },
             border_radius: 0.0.into(),
             border_width: 0.0,
             border_color: Color::TRANSPARENT,
         },
-        style.rail_colors.0,
+        style.rail.rail_colors.0,
+    );
+
+    renderer.fill_quad(
+        renderer::Quad {
+            bounds: Rectangle {
+                x: bounds.x + line_offset.round(),
+                y: line_y,
+                width: bounds.width - line_offset,
+                height: style.rail.rail_height,
+            },
+            border_radius: 0.0.into(),
+            border_width: 0.0,
+            border_color: Color::TRANSPARENT,
+        },
+        Background::Color(style.rail.rail_colors.1),
     );
 
     renderer.fill_quad(
         renderer::Quad {
             bounds: Rectangle {
                 x: bounds.x + offset.round(),
-                y: bounds.y,
-                width: bounds.width - offset,
-                height: 2.0,
-            },
-            border_radius: 0.0.into(),
-            border_width: 0.0,
-            border_color: Color::TRANSPARENT,
-        },
-        Background::Color(style.rail_colors.1),
-    );
-
-    renderer.fill_quad(
-        renderer::Quad {
-            bounds: Rectangle {
-                x: bounds.x + offset.round(),
-                y: bounds.y - handle_height / 2.0,
+                y: bounds.y + bounds.height as f32 / 2.0 - handle_height / 2.0,
                 width: handle_width,
                 height: handle_height,
             },

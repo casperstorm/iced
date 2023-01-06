@@ -416,10 +416,13 @@ impl slider::StyleSheet for Theme {
                 };
 
                 slider::Appearance {
-                    rail_colors: (
-                        palette.primary.base.color,
-                        Color::TRANSPARENT,
-                    ),
+                    rail: slider::Rail {
+                        rail_colors: (
+                            palette.primary.base.color,
+                            palette.primary.base.color,
+                        ),
+                        rail_height: 2.0,
+                    },
                     handle: slider::Handle {
                         color: palette.background.base.color,
                         border_color: palette.primary.base.color,
