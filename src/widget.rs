@@ -80,7 +80,7 @@ pub mod pane_grid {
 
 pub mod pick_list {
     //! Display a dropdown list of selectable values.
-    pub use iced_native::widget::pick_list::{Appearance, StyleSheet};
+    pub use iced_native::widget::pick_list::{Appearance, Handle, StyleSheet};
 
     /// A widget allowing the selection of a single value from a list of options.
     pub type PickList<'a, T, Message, Renderer = crate::Renderer> =
@@ -141,6 +141,7 @@ pub mod tooltip {
 pub use iced_native::widget::progress_bar;
 pub use iced_native::widget::rule;
 pub use iced_native::widget::slider;
+pub use iced_native::widget::vertical_slider;
 pub use iced_native::widget::Space;
 
 pub use button::Button;
@@ -157,6 +158,7 @@ pub use text::Text;
 pub use text_input::TextInput;
 pub use toggler::Toggler;
 pub use tooltip::Tooltip;
+pub use vertical_slider::VerticalSlider;
 
 #[cfg(feature = "canvas")]
 #[cfg_attr(docsrs, doc(cfg(feature = "canvas")))]
