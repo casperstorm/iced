@@ -8,7 +8,7 @@ pub use iced_style::slider::{Appearance, Handle, HandleShape, StyleSheet};
 use crate::event::{self, Event};
 use crate::widget::tree::{self, Tree};
 use crate::{
-    layout, mouse, renderer, touch, Background, Clipboard, Color, Element,
+    layout, mouse, renderer, touch, Clipboard, Color, Element,
     Layout, Length, Point, Rectangle, Shell, Size, Widget,
 };
 
@@ -379,7 +379,7 @@ pub fn draw<T, R>(
             border_width: 0.0,
             border_color: Color::TRANSPARENT,
         },
-        style.rail_colors.0,
+        style.rail.rail_colors.0,
     );
 
     renderer.fill_quad(
@@ -394,7 +394,7 @@ pub fn draw<T, R>(
             border_width: 0.0,
             border_color: Color::TRANSPARENT,
         },
-        Background::Color(style.rail_colors.1),
+        style.rail.rail_colors.1,
     );
 
     let (handle_width, handle_height, handle_border_radius) = match style

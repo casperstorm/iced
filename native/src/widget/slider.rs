@@ -14,7 +14,6 @@ use crate::{
 
 use std::ops::RangeInclusive;
 
-use iced_core::color;
 pub use iced_style::slider::{
     Appearance, Handle, HandleShape, Rail, StyleSheet,
 };
