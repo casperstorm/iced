@@ -399,16 +399,6 @@ pub fn draw<T, R>(
             - handle_width / 2.0
     };
 
-    renderer.fill_quad(
-        renderer::Quad {
-            bounds: bounds,
-            border_radius: 0.0.into(),
-            border_width: 0.0,
-            border_color: Color::TRANSPARENT,
-        },
-        color!(255, 255, 200),
-    );
-
     let line_y =
         bounds.y + bounds.height as f32 / 2.0 - style.rail.rail_height / 2.0;
     let line_offset = offset + handle_width / 2.0;
