@@ -228,6 +228,7 @@ where
         &self,
         tree: &mut Tree,
         _layout: Layout<'_>,
+        _renderer: &Renderer,
         operation: &mut dyn Operation<Message>,
     ) {
         let state = tree.state.downcast_mut::<State>();
@@ -453,9 +454,17 @@ where
                             )
                         } else {
                             None
-                        };
+                        }
+                        .unwrap_or(0);
 
-                        state.cursor.move_to(position.unwrap_or(0));
+                        if state.keyboard_modifiers.shift() {
+                            state.cursor.select_range(
+                                state.cursor.start(value),
+                                position,
+                            );
+                        } else {
+                            state.cursor.move_to(position);
+                        }
                         state.is_dragging = true;
                     }
                     click::Kind::Double => {
