@@ -429,7 +429,7 @@ pub fn draw<T, R>(
             border_width: 0.0,
             border_color: Color::TRANSPARENT,
         },
-        Background::Color(style.rail.rail_colors.1),
+        style.rail.rail_colors.1,
     );
 
     renderer.fill_quad(
