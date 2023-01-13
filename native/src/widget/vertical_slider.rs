@@ -390,8 +390,7 @@ pub fn draw<T, R>(
             - handle_width / 2.0
     };
 
-    let line_x =
-        bounds.x + bounds.width / 2.0 - style.rail.rail_size / 2.0;
+    let line_x = bounds.x + bounds.width / 2.0 - style.rail.rail_size / 2.0;
     let line_offset = offset + handle_width / 2.0;
 
     renderer.fill_quad(
