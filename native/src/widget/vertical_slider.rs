@@ -365,8 +365,6 @@ pub fn draw<T, R>(
         style_sheet.active(style)
     };
 
-    let rail_x = bounds.x + (bounds.width / 2.0).round();
-
     let (handle_width, handle_height, handle_border_radius) = match style
         .handle
         .shape

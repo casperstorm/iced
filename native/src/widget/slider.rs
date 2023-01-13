@@ -8,8 +8,8 @@ use crate::renderer;
 use crate::touch;
 use crate::widget::tree::{self, Tree};
 use crate::{
-    Clipboard, Color, Element, Layout, Length, Point, Rectangle,
-    Shell, Size, Widget,
+    Clipboard, Color, Element, Layout, Length, Point, Rectangle, Shell, Size,
+    Widget,
 };
 
 use std::ops::RangeInclusive;
