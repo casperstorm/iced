@@ -391,7 +391,7 @@ pub fn draw<T, R>(
     };
 
     let line_x =
-        bounds.x + bounds.width as f32 / 2.0 - style.rail.rail_size / 2.0;
+        bounds.x + bounds.width / 2.0 - style.rail.rail_size / 2.0;
     let line_offset = offset + handle_width / 2.0;
 
     renderer.fill_quad(
@@ -427,7 +427,7 @@ pub fn draw<T, R>(
     renderer.fill_quad(
         renderer::Quad {
             bounds: Rectangle {
-                x: bounds.x + bounds.width as f32 / 2.0 - handle_height / 2.0,
+                x: bounds.x + bounds.width / 2.0 - handle_height / 2.0,
                 y: bounds.y + offset.round(),
                 width: handle_height,
                 height: handle_width,
