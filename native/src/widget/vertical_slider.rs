@@ -393,31 +393,16 @@ pub fn draw<T, R>(
     };
 
     let line_x =
-        bounds.y + bounds.height as f32 / 2.0 - style.rail.rail_height / 2.0;
+        bounds.x + bounds.width as f32 / 2.0 - style.rail.rail_size / 2.0;
     let line_offset = offset + handle_width / 2.0;
 
     renderer.fill_quad(
         renderer::Quad {
             bounds: Rectangle {
-                x: rail_x,
+                x: line_x,
                 y: bounds.y,
-                width: 2.0,
+                width: style.rail.rail_size,
                 height: line_offset,
-            },
-            border_radius: 0.0.into(),
-            border_width: 0.0,
-            border_color: Color::TRANSPARENT,
-        },
-        style.rail.rail_colors.0,
-    );
-
-    renderer.fill_quad(
-        renderer::Quad {
-            bounds: Rectangle {
-                x: rail_x,
-                y: bounds.y + line_offset.round(),
-                width: 2.0,
-                height: bounds.height - line_offset,
             },
             border_radius: 0.0.into(),
             border_width: 0.0,
@@ -429,7 +414,22 @@ pub fn draw<T, R>(
     renderer.fill_quad(
         renderer::Quad {
             bounds: Rectangle {
-                x: rail_x - (handle_height / 2.0),
+                x: line_x,
+                y: bounds.y + line_offset.round(),
+                width: style.rail.rail_size,
+                height: bounds.height - line_offset,
+            },
+            border_radius: 0.0.into(),
+            border_width: 0.0,
+            border_color: Color::TRANSPARENT,
+        },
+        style.rail.rail_colors.0,
+    );
+
+    renderer.fill_quad(
+        renderer::Quad {
+            bounds: Rectangle {
+                x: bounds.x + bounds.width as f32 / 2.0 - handle_height / 2.0,
                 y: bounds.y + offset.round(),
                 width: handle_height,
                 height: handle_width,

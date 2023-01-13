@@ -421,7 +421,7 @@ impl slider::StyleSheet for Theme {
                             palette.primary.base.color,
                             palette.primary.base.color,
                         ),
-                        rail_height: 2.0,
+                        rail_size: 2.0,
                     },
                     handle: slider::Handle {
                         color: palette.background.base.color,

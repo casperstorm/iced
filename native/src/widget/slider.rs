@@ -8,7 +8,7 @@ use crate::renderer;
 use crate::touch;
 use crate::widget::tree::{self, Tree};
 use crate::{
-    Background, Clipboard, Color, Element, Layout, Length, Point, Rectangle,
+    Clipboard, Color, Element, Layout, Length, Point, Rectangle,
     Shell, Size, Widget,
 };
 
@@ -399,7 +399,7 @@ pub fn draw<T, R>(
     };
 
     let line_y =
-        bounds.y + bounds.height as f32 / 2.0 - style.rail.rail_height / 2.0;
+        bounds.y + bounds.height as f32 / 2.0 - style.rail.rail_size / 2.0;
     let line_offset = offset + handle_width / 2.0;
 
     renderer.fill_quad(
@@ -408,7 +408,7 @@ pub fn draw<T, R>(
                 x: bounds.x,
                 y: line_y,
                 width: line_offset,
-                height: style.rail.rail_height,
+                height: style.rail.rail_size,
             },
             border_radius: 0.0.into(),
             border_width: 0.0,
@@ -423,7 +423,7 @@ pub fn draw<T, R>(
                 x: bounds.x + line_offset.round(),
                 y: line_y,
                 width: bounds.width - line_offset,
-                height: style.rail.rail_height,
+                height: style.rail.rail_size,
             },
             border_radius: 0.0.into(),
             border_width: 0.0,
