@@ -417,11 +417,14 @@ impl slider::StyleSheet for Theme {
 
                 slider::Appearance {
                     rail: slider::Rail {
-                        rail_colors: (
+                        colors: (
                             palette.primary.base.color,
                             palette.primary.base.color,
                         ),
-                        rail_size: 2.0,
+                        size: 2.0,
+                        border_radius: 0.0,
+                        border_width: 0.0,
+                        border_color: Color::TRANSPARENT,
                     },
                     handle: slider::Handle {
                         color: palette.background.base.color,

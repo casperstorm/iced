@@ -390,7 +390,7 @@ pub fn draw<T, R>(
             - handle_width / 2.0
     };
 
-    let line_x = bounds.x + bounds.width / 2.0 - style.rail.rail_size / 2.0;
+    let line_x = bounds.x + bounds.width / 2.0 - style.rail.size / 2.0;
     let line_offset = offset + handle_width / 2.0;
 
     renderer.fill_quad(
@@ -398,14 +398,14 @@ pub fn draw<T, R>(
             bounds: Rectangle {
                 x: line_x,
                 y: bounds.y,
-                width: style.rail.rail_size,
+                width: style.rail.size,
                 height: line_offset,
             },
-            border_radius: 0.0.into(),
-            border_width: 0.0,
-            border_color: Color::TRANSPARENT,
+            border_radius: style.rail.border_radius.into(),
+            border_width: style.rail.border_width,
+            border_color: style.rail.border_color,
         },
-        style.rail.rail_colors.1,
+        style.rail.colors.1,
     );
 
     renderer.fill_quad(
@@ -413,14 +413,14 @@ pub fn draw<T, R>(
             bounds: Rectangle {
                 x: line_x,
                 y: bounds.y + line_offset.round(),
-                width: style.rail.rail_size,
+                width: style.rail.size,
                 height: bounds.height - line_offset,
             },
-            border_radius: 0.0.into(),
-            border_width: 0.0,
-            border_color: Color::TRANSPARENT,
+            border_radius: style.rail.border_radius.into(),
+            border_width: style.rail.border_width,
+            border_color: style.rail.border_color,
         },
-        style.rail.rail_colors.0,
+        style.rail.colors.0,
     );
 
     renderer.fill_quad(
