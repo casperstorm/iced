@@ -8,8 +8,8 @@ pub use iced_style::slider::{Appearance, Handle, HandleShape, StyleSheet};
 use crate::event::{self, Event};
 use crate::widget::tree::{self, Tree};
 use crate::{
-    layout, mouse, renderer, touch, Clipboard, Color, Element, Layout, Length,
-    Point, Rectangle, Shell, Size, Widget,
+    layout, mouse, renderer, touch, Clipboard, Element, Layout, Length, Point,
+    Rectangle, Shell, Size, Widget,
 };
 
 /// An vertical bar and a handle that selects a single value from a range of
@@ -401,7 +401,13 @@ pub fn draw<T, R>(
                 width: style.rail.size,
                 height: line_offset,
             },
-            border_radius: style.rail.border_radius.into(),
+            border_radius: [
+                style.rail.border_radius,
+                style.rail.border_radius,
+                0.0,
+                0.0,
+            ]
+            .into(),
             border_width: style.rail.border_width,
             border_color: style.rail.border_color,
         },
@@ -416,7 +422,13 @@ pub fn draw<T, R>(
                 width: style.rail.size,
                 height: bounds.height - line_offset,
             },
-            border_radius: style.rail.border_radius.into(),
+            border_radius: [
+                0.0,
+                0.0,
+                style.rail.border_radius,
+                style.rail.border_radius,
+            ]
+            .into(),
             border_width: style.rail.border_width,
             border_color: style.rail.border_color,
         },
