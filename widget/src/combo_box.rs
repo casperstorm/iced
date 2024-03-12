@@ -1,4 +1,6 @@
 //! Display a dropdown list of searchable and selectable options.
+use iced_renderer::graphics::text::Paragraph;
+
 use crate::core::event::{self, Event};
 use crate::core::keyboard;
 use crate::core::keyboard::key;
@@ -181,6 +183,7 @@ pub struct State<T>(RefCell<Inner<T>>);
 
 #[derive(Debug, Clone)]
 struct Inner<T> {
+    text_input: text_input::State<Paragraph>,
     value: String,
     options: Vec<T>,
     option_matchers: Vec<String>,
@@ -217,6 +220,7 @@ where
         );
 
         Self(RefCell::new(Inner {
+            text_input: text_input::State::new(),
             value,
             options,
             option_matchers,
