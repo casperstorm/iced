@@ -224,6 +224,33 @@ where
         }))
     }
 
+    /// Focuses the [`ComboBox`].
+    pub fn focused(self) -> Self {
+        self.focus();
+        self
+    }
+
+    /// Focuses the [`ComboBox`].
+    pub fn focus(&self) {
+        let mut inner = self.0.borrow_mut();
+
+        inner.text_input.focus();
+    }
+
+    /// Unfocuses the [`ComboBox`].
+    pub fn unfocus(&self) {
+        let mut inner = self.0.borrow_mut();
+
+        inner.text_input.unfocus();
+    }
+
+    /// Returns whether the [`ComboBox`] is currently focused or not.
+    pub fn is_focused(&self) -> bool {
+        let inner = self.0.borrow();
+
+        inner.text_input.is_focused()
+    }
+
     fn value(&self) -> String {
         let inner = self.0.borrow();
 
